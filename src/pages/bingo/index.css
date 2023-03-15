@@ -1,0 +1,41 @@
+.bingo-container {
+  text-align: center;
+  background: antiquewhite;
+  padding: 10px;
+}
+
+#bingoLogo{
+  width: 500px;
+  height: auto;
+}
+
+.image-div {
+  padding: 2px;
+  position: relative;
+}
+
+.number-img {
+  vertical-align: middle;
+}
+
+.cross-img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.cross-img-hide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+@media only screen and (max-width: 768px) {     
+  /* For mobile phones: */     
+  #bingoLogo{
+    width: 100%;
+    height: auto;
+  }
+}

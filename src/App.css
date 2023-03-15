@@ -1,8 +1,10 @@
-.App {
-  text-align: center;
+#root {
+  display: flex;
+  min-height: 100%;
+  align-items: stretch;
 }
 
-.App-logo {
+/* .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
   pointer-events: none;
@@ -21,13 +23,33 @@
 
 .App-link {
   color: #61dafb;
+} */
+
+[class*="col-"] {     
+  float: left;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+img {
+  width: 100%;
+  height: auto;
 }
+
+.col-1 {width: 20%;} 
+.col-2 {width: 40%;} 
+.col-3 {width: 60%;} 
+.col-4 {width: 80%;} 
+.col-5 {width: 100%;}
+
+.center-widescreen-width {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+@media only screen and (max-width: 768px) {     
+  /* For mobile phones: */     
+  .center-widescreen-width {
+    width: 100%;
+    margin: 0;
+  }
+} 
