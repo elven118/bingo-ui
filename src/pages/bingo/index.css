@@ -1,4 +1,4 @@
-.bingo-container {
+#bingo-container {
   text-align: center;
   background: antiquewhite;
   padding: 10px;
@@ -7,28 +7,55 @@
 #bingoLogo{
   width: 500px;
   height: auto;
+  margin: -20px;
 }
 
-.image-div {
-  padding: 2px;
+.number-div {
+  aspect-ratio: 1;
+  margin: 5px;
   position: relative;
 }
 
-.number-img {
+.free-img {
   vertical-align: middle;
+}
+
+.number-container {
+background: white;
+height: 100%;
+  box-sizing: border-box;
+  padding: 0.2em;
+}
+
+.number-circle {
+  height: 100%;
+  background: red;
+  border-radius: 50%;
+}
+
+.number-text {
+  font-family: "Source Serif";
+  font-weight: normal;
+  color: white;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .cross-img {
   position: absolute;
   top: 0;
-  bottom: 0;
+  left: 0;
   z-index: 1;
 }
 
 .cross-img-hide {
   position: absolute;
   top: 0;
-  bottom: 0;
+  left: 0;
   z-index: -1;
 }
 

@@ -1,0 +1,66 @@
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in forwards; /* Fade-in animation */
+  opacity: 0;
+}
+
+/* Keyframes for the fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.popup-content {
+  padding: 20px;
+  border-radius: 5px;
+  animation: slideIn 0.3s ease-in-out forwards; /* Slide-in animation */
+  transform: translateY(-20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Keyframes for the slide-in animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.popup-content span {
+  font-size: 200px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Styles for hiding the popup */
+.popup-container.hidden {
+  animation: fadeOut 0.3s ease-in forwards; /* Fade-out animation */
+  opacity: 1;
+}
+
+/* Keyframes for the fade-out animation */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

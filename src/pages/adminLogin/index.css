@@ -1,0 +1,17 @@
+h2 {
+  text-align: center;
+}
+
+.login-container {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#submit-button {
+  width: 80%;
+  display: block;
+  margin: 0 10%;
+}

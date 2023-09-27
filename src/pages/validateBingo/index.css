@@ -1,0 +1,25 @@
+.select {
+  flex: 1;
+}
+
+#validate-container {
+  background: black;
+  width: 100%;
+  padding: 10px;
+}
+
+#numbers-grid {
+  display: grid;
+  height: 100%;
+}
+
+.numbers-grid-item {
+  grid-column-start: auto;
+  grid-row-start: auto;
+  margin: 5px;
+  border: 1px solid white;
+}
+
+.adjust-font {
+  color: white;
+}
