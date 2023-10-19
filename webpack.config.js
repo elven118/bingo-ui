@@ -20,7 +20,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.ttf$/i,
+                test: /\.(woff(2)?|ttf|otf)$/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -49,7 +49,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: '首頁',
+            title: 'Bingo',
             filename: 'index.html',
             template: 'src/index.html'
         }),

@@ -1,10 +1,14 @@
 /* The alert message box */
 .alert {
-  position: relative;
+  position: absolute;
+  top: 10px;
+  left: 50%; 
+  transform: translate(-50%, 0);
   padding: 1rem 1rem;
   margin: 1rem 0;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  z-index: 100;
 }
 
 .error {
@@ -27,7 +31,7 @@
 
 /* When moving the mouse over the close button */
 .closebtn:hover {
-  color: black;
+  color: gray;
 }
 .hide {
   display: none;

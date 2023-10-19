@@ -6,16 +6,19 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import AdminBingoDrawer from "./pages/adminBingoDrawer";
 import AdminLogin from "./pages/adminLogin";
+import AdminValidateBingo from "./pages/adminValidateBingo";
 import Bingo from "./pages/bingo";
-import BingoDrawer from "./pages/bingoDrawer";
 import Login from "./pages/login";
-import ValidateBingo from "./pages/validateBingo";
+import Alert from "./components/alert";
+import { getJwt } from "./utils/jwt";
 
 const ProtectedRoute = ({ redirectRoute = "/", ...props }) => {
-  const jwt = localStorage.getItem("jwt");
+  const jwt = getJwt();
+
   if (!jwt) {
-    return <Redirect to="/" />;
+    return <Redirect to={redirectRoute} />;
   }
 
   return <Route {...props} />;
@@ -24,23 +27,26 @@ const ProtectedRoute = ({ redirectRoute = "/", ...props }) => {
 class App extends Component {
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route
-            path="/admin"
-            redirectRoute="/admin-login"
-            component={BingoDrawer}
-          />
-          <Route
-            path="/admin-validate"
-            redirectRoute="/admin-login"
-            component={ValidateBingo}
-          />
-          <Route path="/admin-login" component={AdminLogin} />
-          <ProtectedRoute path="/bingo" component={Bingo} />
-          <Route path="/" component={Login} />
-        </Switch>
-      </Router>
+      <>
+        <Alert />
+        <Router>
+          <Switch>
+            <ProtectedRoute
+              path="/admin"
+              redirectRoute="/admin-login"
+              component={AdminBingoDrawer}
+            />
+            <ProtectedRoute
+              path="/admin-validate"
+              redirectRoute="/admin-login"
+              component={AdminValidateBingo}
+            />
+            <Route path="/admin-login" component={AdminLogin} />
+            <ProtectedRoute path="/bingo" component={Bingo} />
+            <Route path="/" component={Login} />
+          </Switch>
+        </Router>
+      </>
     );
   }
 }

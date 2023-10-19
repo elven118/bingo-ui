@@ -5,6 +5,7 @@
   "dependencies": {
     "graphql": "^16.8.1",
     "graphql-request": "^4.3.0",
+    "jwt-decode": "^3.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^7.46.2",
@@ -36,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "source-map-explorer": "^2.5.3"
   }
 }

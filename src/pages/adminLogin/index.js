@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { request, gql } from "graphql-request";
 import { useHistory } from "react-router-dom";
-import Alert from "../../components/alert";
+import { alertEmitter } from "../../components/alert";
 import Button from "../../components/button";
 import InputBox from "../../components/input-box";
 import Loader from "../../components/loader";
@@ -17,7 +17,6 @@ const AdminLogin = () => {
   const history = useHistory();
 
   const [submitting, setSubmitting] = useState(false);
-  const [isShow, setIsShow] = useState(false);
 
   const onSubmit = (data) => {
     const query = gql`
@@ -29,7 +28,6 @@ const AdminLogin = () => {
       data: data,
     };
     setSubmitting(true);
-    console.log();
     request({
       url: process.env.REACT_APP_BACKEND_URL,
       variables,
@@ -39,11 +37,11 @@ const AdminLogin = () => {
     })
       .then((res) => {
         setSubmitting(false);
-        localStorage.setItem("jwt", res.login);
+        localStorage.setItem("jwt", res.loginAdmin);
         history.push("/admin");
       })
       .catch((error) => {
-        setIsShow(true);
+        alertEmitter.showAlert("Incorrect Name or Password!")
         setSubmitting(false);
       });
   };
@@ -89,11 +87,6 @@ const AdminLogin = () => {
         <Button type="submit" disabled={submitting} id="submit-button">
           {submitting ? <Loader /> : <span>Submit</span>}
         </Button>
-        <Alert
-          message="Incorrect Code, Name or Password!"
-          isShow={isShow}
-          setIsShow={setIsShow}
-        />
       </form>
     </div>
   );

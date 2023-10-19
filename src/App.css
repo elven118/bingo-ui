@@ -25,31 +25,7 @@
   color: #61dafb;
 } */
 
-[class*="col-"] {     
-  float: left;
-}
-
 img {
   width: 100%;
   height: auto;
 }
-
-.col-1 {width: 20%;} 
-.col-2 {width: 40%;} 
-.col-3 {width: 60%;} 
-.col-4 {width: 80%;} 
-.col-5 {width: 100%;}
-
-.center-widescreen-width {
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-@media only screen and (max-width: 768px) {     
-  /* For mobile phones: */     
-  .center-widescreen-width {
-    width: 100%;
-    margin: 0;
-  }
-} 

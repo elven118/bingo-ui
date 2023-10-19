@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Popup from "../../../components/popup";
 import "./index.css";
 
-const Popup = ({ numberArray, setIsOpen, setNumberArray }) => {
+const DrawerPopup = ({ numberArray, setIsOpen, updateNumberArray }) => {
   const [number, setNumber] = useState();
 
   useEffect(() => {
@@ -15,8 +16,8 @@ const Popup = ({ numberArray, setIsOpen, setNumberArray }) => {
             randomNubmer = Math.floor(Math.random() * 75) + 1;
           }
           setNumber(randomNubmer);
+          updateNumberArray(randomNubmer);
           setTimeout(function () {
-            setNumberArray((n) => [...n, randomNubmer]);
             setIsOpen(false);
           }, process.env.REACT_APP_POPUP_TIME || 1000);
         } else {
@@ -31,12 +32,10 @@ const Popup = ({ numberArray, setIsOpen, setNumberArray }) => {
   }, []);
 
   return (
-    <div className="popup-container">
-      <div className="popup-content">
-        <span>{number}</span>
-      </div>
-    </div>
+    <Popup>
+      <span id="number">{number}</span>
+    </Popup>
   );
 };
 
-export default Popup;
+export default DrawerPopup;

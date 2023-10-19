@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { request, gql } from "graphql-request";
 import { useHistory } from "react-router-dom";
-import Alert from "../../components/alert";
+import { alertEmitter } from "../../components/alert";
 import Button from "../../components/button";
 import InputBox from "../../components/input-box";
 import Loader from "../../components/loader";
@@ -17,7 +17,6 @@ const Login = () => {
   const history = useHistory();
 
   const [submitting, setSubmitting] = useState(false);
-  const [isShow, setIsShow] = useState(false);
 
   const onSubmit = (data) => {
     const mutation = gql`
@@ -41,7 +40,7 @@ const Login = () => {
         history.push("/bingo");
       })
       .catch((error) => {
-        setIsShow(true);
+        alertEmitter.showAlert("Incorrect Code or Name!");
         setSubmitting(false);
       });
   };
@@ -88,11 +87,6 @@ const Login = () => {
         <Button type="submit" disabled={submitting} id="submit-button">
           {submitting ? <Loader /> : <span>Submit</span>}
         </Button>
-        <Alert
-          message="Incorrect Code or Name!"
-          isShow={isShow}
-          setIsShow={setIsShow}
-        />
       </form>
     </div>
   );

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import "./index.css";
 
-const AutoAdjustText = ({ text, textClassName, fontSize, setFontSize }) => {
+const AutoAdjustText = ({ text, textClassName, fontSize, updateFontSize }) => {
   const containerRef = useRef(null);
   const contentRef = useRef(null);
-  const defaultFontSize = 16; // Initial font size
+  const defaultFontSize = 16;
 
   useEffect(() => {
     const container = containerRef.current;
@@ -29,16 +29,16 @@ const AutoAdjustText = ({ text, textClassName, fontSize, setFontSize }) => {
       // Set the font size based on the scaling factor
       const newFontSize = (fontSize || defaultFontSize) * scalingFactor; // Adjust the base font size as needed
 
-      if (fontSize) {
-        setFontSize(Math.min(newFontSize, fontSize));
-      } else {
-        setFontSize(newFontSize);
-      }
+      updateFontSize(newFontSize);
     };
 
-    // Call the adjustFontSize function initially
-    adjustFontSize();
-  }, [fontSize, setFontSize, text]);
+    if (!fontSize) {
+      // Call the adjustFontSize function initially
+      adjustFontSize();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fontSize]);
 
   return (
     <div ref={containerRef} className="adjust-text-container">

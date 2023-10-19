@@ -2,10 +2,25 @@
   text-align: center;
   background: antiquewhite;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.center-widescreen-width {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.bingo-component-width {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
 }
 
 #bingoLogo{
-  width: 500px;
+  width: 90%;
   height: auto;
   margin: -20px;
 }
@@ -21,8 +36,8 @@
 }
 
 .number-container {
-background: white;
-height: 100%;
+  background: white;
+  height: 100%;
   box-sizing: border-box;
   padding: 0.2em;
 }
@@ -59,10 +74,56 @@ height: 100%;
   z-index: -1;
 }
 
-@media only screen and (max-width: 768px) {     
+@media only screen and (max-width: 767px) {     
   /* For mobile phones: */     
   #bingoLogo{
     width: 100%;
     height: auto;
+  }
+
+  .center-widescreen-width {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* For tablelet and some desktop: */     
+  .center-widescreen-width {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+}
+
+.arrow-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow-icon {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.arrow-icon:hover{
+  color: red;
+}
+
+.arrow-icon-selected {
+  animation: flashicon 2s infinite;
+}
+
+.diagonal {
+  transform: rotate(45deg);
+}
+
+@keyframes flashicon {
+  0%, 100% {
+    color: black;
+  }
+  50% {
+    color: dodgerblue;
   }
 }
