@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { request, gql } from "graphql-request";
 import { useHistory } from "react-router-dom";
-import DrawerPopup from "./drawer-popup";
 import { alertEmitter } from "../../components/alert";
 import AutoAdjustText from "../../components/auto-adjust-text";
+import InputBox from "../../components/input-box";
+import ConfirmationBox from "../../components/confirmation-box";
 import Menu from "../../components/menu";
 import { getJwt } from "../../utils/jwt";
 import "./index.css";
@@ -14,20 +15,21 @@ const AdminBingoDrawer = () => {
   const [colNum] = useState(10);
   const [gridFontSizes, setGridFontSizes] = useState([]);
   const [globalFontSize, setGlobalFontSize] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAddBoxOpen, setIsAddBoxOpen] = useState(false);
+  const [isDeleteBoxOpen, setIsDeleteBoxOpen] = useState(false);
   const history = useHistory();
 
   const getLotteryNumbers = () => {
     const jwt = getJwt();
     if (!jwt) return;
-    const query = gql`
+    const mutation = gql`
       query {
         lotteryNumbers
       }
     `;
     request({
       url: process.env.REACT_APP_BACKEND_URL,
-      document: query,
+      document: mutation,
       requestHeaders: {
         Authorization: jwt,
       },
@@ -43,9 +45,9 @@ const AdminBingoDrawer = () => {
       });
   };
 
-  const drawOpen = () => {
+  const addNumberOpen = () => {
     if (numberArray.length === 75) return;
-    setIsOpen(true);
+    setIsAddBoxOpen(true);
   };
 
   const updateNumberArray = (element) => {
@@ -74,7 +76,7 @@ const AdminBingoDrawer = () => {
         alertEmitter.showAlert(
           error?.response?.errors?.map((e) => e.message).join(", ")
         );
-        setIsOpen(false);
+        setIsAddBoxOpen(false);
       });
   };
 
@@ -124,19 +126,17 @@ const AdminBingoDrawer = () => {
 
   return (
     <>
-      {isOpen && (
-        <DrawerPopup
-          setIsOpen={setIsOpen}
-          numberArray={numberArray}
-          updateNumberArray={updateNumberArray}
-        />
-      )}
       <Menu
         menuItems={[
           {
-            key: "DrawMenuItem",
-            title: "Draw !!!",
-            onClick: drawOpen,
+            key: "AddMenuItem",
+            title: "Add",
+            onClick: addNumberOpen,
+          },
+          {
+            key: "AddMenuItem",
+            title: "Delete",
+            onClick: () => setIsDeleteBoxOpen(true),
           },
           {
             key: "BackMenuItem",
@@ -145,6 +145,31 @@ const AdminBingoDrawer = () => {
           },
         ]}
       />
+      {isAddBoxOpen && (
+        <ConfirmationBox
+          onClose={() => setIsAddBoxOpen(false)}
+          onOk={() => {}}
+          okBtnProps={{ title: "DELETE", type: "danger" }}
+        >
+          <InputBox
+            // name={name}
+            label="Number *"
+            inputType="number"
+            // errorText={errors.name && errors.name.message}
+            // onBlur={onBlur}
+            // onChange={onChange}
+          />
+        </ConfirmationBox>
+      )}
+      {isDeleteBoxOpen && (
+        <ConfirmationBox
+          onClose={() => setIsDeleteBoxOpen(false)}
+          onOk={() => {}}
+          okBtnProps={{ title: "DELETE", type: "danger" }}
+        >
+          <h2>Are you sure to delete the latest number?</h2>
+        </ConfirmationBox>
+      )}
       <div id="drawer-container">
         <div
           id="numbers-grid"

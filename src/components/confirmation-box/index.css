@@ -1,4 +1,4 @@
-.popup-container {
+.confirmation-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -23,12 +23,14 @@
   }
 }
 
-.popup-content {
+.confirmation-box {
   padding: 20px;
   border-radius: 5px;
+  background-color: white;
   animation: slideIn 0.3s ease-in-out forwards; /* Slide-in animation */
   transform: translateY(-20px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -41,4 +43,9 @@
   to {
     transform: translateY(0);
   }
+}
+
+.btn-container {
+  display: flex;
+  gap: 10px;
 }

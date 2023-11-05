@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import { request, gql } from "graphql-request";
+import { useHistory } from "react-router-dom";
 import Select, { createFilter } from "react-select";
 import ResultPopup from "./result-popup";
 import AutoAdjustText from "../../components/auto-adjust-text";
 import Button from "../../components/button";
+import Menu from "../../components/menu";
 import Loader from "../../components/loader";
 import { alertEmitter } from "../../components/alert";
-import "./index.css";
 import Bingo from "../bingo";
 import { getJwt } from "../../utils/jwt";
+import "./index.css";
 
-const ValidateBingo = () => {
+const AdminValidateBingo = () => {
   const [numberArray, setNumberArray] = useState([]);
   const [rowNum, setRowNum] = useState(6);
   const [colNum] = useState(10);
@@ -23,6 +25,7 @@ const ValidateBingo = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [flashNumbers, setFlashNumbers] = useState([]);
   const animatedElementRefs = useRef([]);
+  const history = useHistory();
 
   const handleChangeUser = (option) => {
     setSelectedUser(option);
@@ -207,6 +210,15 @@ const ValidateBingo = () => {
 
   return (
     <div id="validate-container">
+      <Menu
+        menuItems={[
+          {
+            key: "BackMenuItem",
+            title: "Back",
+            onClick: () => history.goBack(),
+          },
+        ]}
+      />
       {popupOpen && (
         <ResultPopup validateResult={validateResult} setIsOpen={setPopupOpen} />
       )}
@@ -277,4 +289,4 @@ const ValidateBingo = () => {
   );
 };
 
-export default ValidateBingo;
+export default AdminValidateBingo;

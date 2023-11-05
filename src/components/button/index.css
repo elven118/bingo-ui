@@ -1,5 +1,5 @@
 .submit-btn {
-  background: #6ab2fa;
+  background-color: #6ab2fa;
   color: black;
   text-transform: uppercase;
   font-weight: 500;
@@ -12,4 +12,22 @@
 
 .submit-btn:hover {
   background: #9cc9f5;
+}
+
+.submit-btn-danger {
+  background-color: red;
+  color: white
+}
+
+.submit-btn-danger:hover {
+  background-color: #fe5353;
+}
+
+.submit-btn-soft {
+  background-color: white;
+  border: 1px solid black;
+}
+
+.submit-btn-soft:hover {
+  background-color: lightgray;
 }

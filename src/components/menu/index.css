@@ -5,9 +5,9 @@
   left: -130px; 
   transition: left 0.3s ease-in-out;
   transform: translate(0, -50%);
-  box-shadow: 0 0 7px 3px white;
   z-index: 100;
   border-radius: 5px;
+  filter: drop-shadow(2px 0 5px white);
 }
 
 .sliding-menu:hover {
@@ -23,7 +23,6 @@
   padding: 10px 10px 10px 20px;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  box-shadow: 0 0 7px 3px white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +35,7 @@
   background-color: black;
   z-index: 100;
   position: relative;
-  border-radius: inherit;
+  border-radius: 5px;
   overflow: hidden;
 }
 
@@ -45,6 +44,7 @@
   color: white;
   cursor: pointer;
   font-size: 20px;
+  line-height: 20px;
   height: 100%;
   display: flex;
   align-items: center;

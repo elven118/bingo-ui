@@ -6,7 +6,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import AdminBingoDisplay from "./pages/adminBingoDisplay";
 import AdminBingoDrawer from "./pages/adminBingoDrawer";
+import AdminHome from "./pages/adminHome";
 import AdminLogin from "./pages/adminLogin";
 import AdminValidateBingo from "./pages/adminValidateBingo";
 import Bingo from "./pages/bingo";
@@ -33,6 +35,16 @@ class App extends Component {
           <Switch>
             <ProtectedRoute
               path="/admin"
+              redirectRoute="/admin-login"
+              component={AdminHome}
+            />
+            <ProtectedRoute
+              path="/admin-display"
+              redirectRoute="/admin-login"
+              component={AdminBingoDisplay}
+            />
+            <ProtectedRoute
+              path="/admin-draw"
               redirectRoute="/admin-login"
               component={AdminBingoDrawer}
             />
