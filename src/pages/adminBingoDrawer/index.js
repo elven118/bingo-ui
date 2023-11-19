@@ -69,6 +69,7 @@ const AdminBingoDrawer = () => {
     })
       .then((res) => {
         setNumberArray((n) => [...n, res.addLotteryNumber]);
+        setGridFontSizes((n) => [...n, null]);
       })
       .catch((error) => {
         alertEmitter.showAlert(
@@ -116,7 +117,7 @@ const AdminBingoDrawer = () => {
       const minSize = gridFontSizes.reduce((min, item) => {
         return Math.min(min, item);
       }, Infinity);
-      setGlobalFontSize(minSize !== Infinity ? minSize : 16);
+      setGlobalFontSize(minSize !== Infinity ? minSize : null);
     };
 
     calMinOfFontSize();

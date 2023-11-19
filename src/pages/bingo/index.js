@@ -113,7 +113,7 @@ const Bingo = ({ validateResult, lotterNumbers, chooseValidLine }) => {
       const minSize = gridFontSizes.reduce((min, item) => {
         return Math.min(min, item);
       }, Infinity);
-      setFontSize(minSize !== Infinity ? minSize : 16);
+      setFontSize(minSize !== Infinity ? minSize : null);
     };
 
     calMinOfFontSize();

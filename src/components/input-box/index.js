@@ -2,11 +2,20 @@ import React from "react";
 import "./index.css";
 
 const InputBox = (props) => {
-  const { inputType, inputMode, label, name, errorText, helperText, onBlur, onChange } = props;
+  const {
+    inputType,
+    inputMode,
+    label,
+    name,
+    errorText,
+    helperText,
+    onBlur,
+    onChange,
+  } = props;
 
   return (
-    <div className="input-group">
-      <label className={`input-filled${(errorText && " input-danger") || ""}`}>
+    <div className={`input-group${(errorText && " input-group-danger") || ""}`}>
+      <label className="input-filled">
         <input
           type={inputType}
           inputMode={inputMode}
@@ -16,9 +25,9 @@ const InputBox = (props) => {
           onChange={onChange}
         />
         <span className="input-label">{label}</span>
-        {errorText && <p className="input-error">{errorText}</p>}
-        {helperText && <p className="input-helper">{helperText}</p>}
       </label>
+      {errorText && <p className="input-error">{errorText}</p>}
+      {helperText && <p className="input-helper">{helperText}</p>}
     </div>
   );
 };

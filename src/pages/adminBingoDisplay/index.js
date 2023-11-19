@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { request, gql } from "graphql-request";
 import { useHistory } from "react-router-dom";
 import { alertEmitter } from "../../components/alert";
 import AutoAdjustText from "../../components/auto-adjust-text";
-import InputBox from "../../components/input-box";
 import ConfirmationBox from "../../components/confirmation-box";
+import InputBox from "../../components/input-box";
+import Loader from "../../components/loader";
 import Menu from "../../components/menu";
 import { getJwt } from "../../utils/jwt";
 import "./index.css";
@@ -17,6 +19,13 @@ const AdminBingoDrawer = () => {
   const [globalFontSize, setGlobalFontSize] = useState(null);
   const [isAddBoxOpen, setIsAddBoxOpen] = useState(false);
   const [isDeleteBoxOpen, setIsDeleteBoxOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const history = useHistory();
 
   const getLotteryNumbers = () => {
@@ -50,7 +59,11 @@ const AdminBingoDrawer = () => {
     setIsAddBoxOpen(true);
   };
 
-  const updateNumberArray = (element) => {
+  const onAddOk = () => {
+    handleSubmit(updateNumberArray)();
+  };
+
+  const updateNumberArray = (data) => {
     const jwt = getJwt();
     if (!jwt) return;
     const mutation = gql`
@@ -59,8 +72,9 @@ const AdminBingoDrawer = () => {
       }
     `;
     const variables = {
-      number: element,
+      number: data.number,
     };
+    setSubmitting(true);
     request({
       url: process.env.REACT_APP_BACKEND_URL,
       variables,
@@ -71,12 +85,47 @@ const AdminBingoDrawer = () => {
     })
       .then((res) => {
         setNumberArray((n) => [...n, res.addLotteryNumber]);
+        setGridFontSizes((n) => [...n, null]);
+        setSubmitting(false);
+        setIsAddBoxOpen(false);
       })
       .catch((error) => {
         alertEmitter.showAlert(
           error?.response?.errors?.map((e) => e.message).join(", ")
         );
-        setIsAddBoxOpen(false);
+        setSubmitting(false);
+      });
+  };
+
+  const deleteLastNumberArray = () => {
+    const jwt = getJwt();
+    if (!jwt) return;
+    const mutation = gql`
+      mutation () {
+        deleteLastLotteryNumber
+      }
+    `;
+    setSubmitting(true);
+    request({
+      url: process.env.REACT_APP_BACKEND_URL,
+      document: mutation,
+      requestHeaders: {
+        Authorization: jwt,
+      },
+    })
+      .then((res) => {
+        if (res?.deleteLastLotteryNumber) {
+          setNumberArray((n) => n.slice(0, -1));
+          setGridFontSizes((n) => n.slice(0, -1));
+          setIsDeleteBoxOpen(false);
+        }
+        setSubmitting(false);
+      })
+      .catch((error) => {
+        alertEmitter.showAlert(
+          error?.response?.errors?.map((e) => e.message).join(", ")
+        );
+        setSubmitting(false);
       });
   };
 
@@ -118,7 +167,7 @@ const AdminBingoDrawer = () => {
       const minSize = gridFontSizes.reduce((min, item) => {
         return Math.min(min, item);
       }, Infinity);
-      setGlobalFontSize(minSize !== Infinity ? minSize : 16);
+      setGlobalFontSize(minSize !== Infinity ? minSize : null);
     };
 
     calMinOfFontSize();
@@ -134,7 +183,7 @@ const AdminBingoDrawer = () => {
             onClick: addNumberOpen,
           },
           {
-            key: "AddMenuItem",
+            key: "DeleteMenuItem",
             title: "Delete",
             onClick: () => setIsDeleteBoxOpen(true),
           },
@@ -148,24 +197,46 @@ const AdminBingoDrawer = () => {
       {isAddBoxOpen && (
         <ConfirmationBox
           onClose={() => setIsAddBoxOpen(false)}
-          onOk={() => {}}
-          okBtnProps={{ title: "DELETE", type: "danger" }}
+          onOk={onAddOk}
+          okBtnProps={{ title: submitting ? <Loader /> : "Add" }}
         >
-          <InputBox
-            // name={name}
-            label="Number *"
-            inputType="number"
-            // errorText={errors.name && errors.name.message}
-            // onBlur={onBlur}
-            // onChange={onChange}
-          />
+          <form onSubmit={handleSubmit(updateNumberArray)}>
+            <Controller
+              name="number"
+              control={control}
+              rules={{
+                required: "Number is required",
+                min: {
+                  value: 1,
+                  message: "Number must be larger than or equal to 1",
+                },
+                max: {
+                  value: 75,
+                  message: "Number must be smaller than or equal to 75",
+                },
+              }}
+              render={({ field: { name, onChange, onBlur } }) => (
+                <InputBox
+                  name={name}
+                  label="Number *"
+                  inputType="number"
+                  errorText={errors.number && errors.number.message}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                />
+              )}
+            />
+          </form>
         </ConfirmationBox>
       )}
       {isDeleteBoxOpen && (
         <ConfirmationBox
           onClose={() => setIsDeleteBoxOpen(false)}
-          onOk={() => {}}
-          okBtnProps={{ title: "DELETE", type: "danger" }}
+          onOk={deleteLastNumberArray}
+          okBtnProps={{
+            title: submitting ? <Loader /> : "DELETE",
+            type: "danger",
+          }}
         >
           <h2>Are you sure to delete the latest number?</h2>
         </ConfirmationBox>

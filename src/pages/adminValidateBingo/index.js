@@ -87,14 +87,15 @@ const AdminValidateBingo = () => {
         flashNumbers.forEach((n) => {
           if (n > 0) {
             const element = animatedElementRefs.current[n];
-            element.classList.remove("flash-text");
-            void element.offsetWidth;
+            element?.classList?.remove("flash-text");
+            void element?.offsetWidth;
           }
         });
         setFlashNumbers([]);
         setPopupOpen(true);
       })
       .catch((error) => {
+        console.log(error);
         alertEmitter.showAlert(
           error?.response?.errors?.map((e) => e.message).join(", ")
         );
@@ -202,7 +203,7 @@ const AdminValidateBingo = () => {
       const minSize = gridFontSizes.reduce((min, item) => {
         return Math.min(min, item);
       }, Infinity);
-      setGlobalFontSize(minSize !== Infinity ? minSize : 16);
+      setGlobalFontSize(minSize !== Infinity ? minSize : null);
     };
 
     calMinOfFontSize();

@@ -12,6 +12,7 @@
 div.input-group {
   margin-bottom: 1.5rem;
   position: relative;
+	max-width: min-content;
 }
 
 /* Input*/
@@ -40,17 +41,17 @@ div.input-group {
 	transition: top .2s;
 }
 
-.input-filled > .input-helper,
-.input-filled > .input-error {
+.input-helper,
+.input-error {
 	font-size: 0.9375rem;
 	color: var(--color-ink-medium-contrast);
 	letter-spacing: 0.0275rem;
 	margin: 0.125rem 0.875rem;
+  white-space: normal;
 }
 
 .input-filled > input:hover {
 	background: var(--color-interaction-minus-two);
-	border-color: var(--color-ink-high-contrast);
 }
 
 .input-filled > input:focus + .input-label,
@@ -59,25 +60,13 @@ div.input-group {
 	font-size: 0.8rem;
 }
 
-.input-filled:not(.input-danger) > input:focus + .input-label {
+.input-group:not(.input-group-danger) > .input-filled > input:focus + .input-label {
 	color: var(--color-interaction);
 }
 
-.input-filled:not(.input-danger) > input:focus {
-	border-color: var(--color-interaction);
-}
-
 /** DANGER **/
-.input-filled.input-danger > .input-label, .input-filled.input-danger > .input-error {
+.input-group.input-group-danger > .input-filled > .input-label, .input-group.input-group-danger > .input-error {
 	color: var(--color-danger);
-}
-
-.input-danger > svg {
-	fill: var(--color-danger);
-}
-
-.input-danger > input {
-	border-color: var(--color-danger);
 }
 
 .input-filled > input {
